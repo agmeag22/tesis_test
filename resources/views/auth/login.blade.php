@@ -1,69 +1,179 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C-SERCO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link href="/css/tailwind.min.css" rel="stylesheet">
+    <!--===============================================================================================-->
+    {{-- <link rel="stylesheet" type="text/css" href="/css/cst_main.css"> --}}
+    <!--===============================================================================================-->
+    <style type="text/css">
+       body{
+        background: url(/img/cubes.png);
+        background-size: 107px;
+        width: 100%;
+        height: 100%;
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
+    }
+    .cst-card{
+        border-radius: 12px !important;
+        padding: 42px !important;
+        opacity: 0.9;
+        box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 50%) !important;
+        background-color: rgb(0 0 0 / 40%);
+        display: flex;
+        flex-wrap: wrap;
+        margin: 20px;
+        justify-content: center;
+        align-items: center;
+    }
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+    .cst-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+    }
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+    .cst-input{
+        width: 100%;
+        color: white;
+        margin-bottom: 14px;
+        font-size: 14px;
+        height: 35px;
+        border: 4px solid black;
+        background-color: #efe5e500;
+        border-color: transparent !important;
+        border-bottom-color: #4ac04a !important;
+        font-weight: bold;
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+    }
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+    .cst-input:focus ~ .floating-label,
+    .cst-input:not(:focus):valid ~ .floating-label{
+      position: relative;
+      pointer-events: none;
+      top: -70px;
+      font-size: 14px;
+      left: 0px;
+      opacity: 1;
+      font-weight: bolder !important;
+      color:white;
+  }
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+  .cst-input:focus {
+    outline: none !important;
+    border-bottom-color: green;
+}
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+.floating-label {
+    position: relative;
+    pointer-events: none;
+    top: -43px;
+    font-weight: bolder !important;
+    left: 10px;
+    color: white;
+    transition: 0.5s ease all;
+}
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+.no-outline-focus:focus{
+    outline: none !important;
+}
 
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
+.cst-btn{
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100%;
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    transition: 1s ease all;
+}
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+.cst-btn:hover{
+    background-color: white;
+    color: black;
+}
+
+.cst-form{
+    margin-top: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+    .cst-form {
+        margin-left: 30px;
+    }
+
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    color: white;
+}
+</style>
+</head>
+<body>
+    <div class="cst-container">
+
+        <div class="cst-card">
+            <div class="cst-img-container">
+                <img src="/img/cserco_logo_negro.svg" alt="AVATAR" class="w-48  self-center">
             </div>
+            <form method="POST" action="{{ route('login') }}" class="cst-form">
+                {{-- @csrf --}}
+
+                <div class="form-group row">
+                    {{-- <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label> --}}
+                    <input id="username" type="text" class="cst-input  @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                    <span class="floating-label">USUARIO</span>
+
+                    {{-- @error('username')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror --}}
+                </div>
+
+                <div class="form-group row">
+                    {{-- <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label> --}}
+
+
+                    <input id="password" type="password" class="form-control cst-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    <span class="floating-label">CONTRASEñA</span>
+
+                    {{-- @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror --}}
+                </div>
+
+                <div class="form-group row mb-0">
+                    <div class="col-md-8 offset-md-4">
+                        <button type="submit" class="no-outline-focus cst-btn">
+                            INICIAR SESIÓN
+                        </button>
+
+                       {{--  @if (Route::has('password.request'))
+                        <a class="no-outline-focus cst-btn" href="{{ route('password.request') }}">
+                           Eegistrarse
+                        </a>
+                        @endif --}}
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-@endsection
+
+
+</body>
+</html>

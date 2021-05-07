@@ -15,11 +15,18 @@ class Role extends Model
     public const ADMIN_ROLE = 1;
     public const USER_ROLE = 2;
     /**
+     * The table name for the model.
+     *
+     * @var string
+     */
+    protected $table = 'role';
+
+/**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id_roles';
+    protected $primaryKey = 'idrole';
 
     /**
      * The "type" of the auto-incrementing ID.
@@ -31,6 +38,7 @@ class Role extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'created_at', 'updated_at'];
+    protected $fillable = ['nombre', 'estado', 'eliminado', 'created_at', 'updated_at'];
+
 
 }

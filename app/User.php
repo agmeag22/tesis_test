@@ -9,11 +9,18 @@ class User extends Authenticatable
 {
     use Notifiable;
     /**
+     * The table name for the model.
+     *
+     * @var string
+     */
+    protected $table = 'usuario';
+
+    /**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id_users';
+    protected $primaryKey = 'idusuario';
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'id_roles'
+        'idrol', 'username', 'nombre', 'email', 'estado', 'eliminado',
     ];
 
     /**
@@ -44,6 +51,6 @@ class User extends Authenticatable
 
     public function role()
     {
-       return $this->hasOne(Role::class, 'id_roles', 'id_roles');
+       return $this->hasOne(Role::class, 'idrole', 'idrol');
     }
 }
