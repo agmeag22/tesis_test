@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>C-SERCO</title>
+    <title>IUDOP ADMINISTRATIVO</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -11,7 +11,7 @@
     {{-- <link rel="stylesheet" type="text/css" href="/css/cst_main.css"> --}}
     <!--===============================================================================================-->
     <style type="text/css">
-       body{
+     body{
         background: url(/img/cubes.png);
         background-size: 107px;
         width: 100%;
@@ -126,48 +126,33 @@ input:-webkit-autofill:active {
 
         <div class="cst-card">
             <div class="cst-img-container">
-                <img src="/img/cserco_logo_negro.svg" alt="AVATAR" class="w-48  self-center">
+                <img src="/img/.svg" alt="AVATAR" class="w-48  self-center">
             </div>
             <form method="POST" action="{{ route('login') }}" class="cst-form">
                 {{ csrf_field() }}
 
                 <div class="form-group row">
-                    {{-- <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label> --}}
                     <input id="username" type="text" class="cst-input  @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
                     <span class="floating-label">USUARIO</span>
-
-                    {{-- @error('username')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror --}}
                 </div>
 
                 <div class="form-group row">
-                    {{-- <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label> --}}
-
 
                     <input id="password" type="password" class="form-control cst-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                     <span class="floating-label">CONTRASEñA</span>
-
-                    {{-- @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror --}}
                 </div>
-
+                @if(count( $errors ) > 0)
+                @foreach ($errors->all() as $error)
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $error }}</strong>
+                </span>
+                @endforeach
+                @endif
                 <div class="form-group row mb-0">
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="no-outline-focus cst-btn">
                             INICIAR SESIÓN
                         </button>
-
-                       {{--  @if (Route::has('password.request'))
-                        <a class="no-outline-focus cst-btn" href="{{ route('password.request') }}">
-                           Eegistrarse
-                        </a>
-                        @endif --}}
                     </div>
                 </div>
             </form>
