@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
-    public const ADMIN_ROLE = 1;
-    public const USER_ROLE = 2;
+    const ADMIN_ROLE = 1;
+    const USER_ROLE = 2;
     /**
      * The table name for the model.
      *
