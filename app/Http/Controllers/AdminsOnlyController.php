@@ -15,7 +15,7 @@ class AdminsOnlyController extends Controller
 ///home/only_admin_can_see
     public function only_admin_can_see()
     {
-        return "ONLY AN ADMIN CAN SEE THIS";
+        return view('home');
     }
 
 //    /home/everyone

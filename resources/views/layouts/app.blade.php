@@ -27,6 +27,8 @@
         }
 
     </style>
+    @section('style')
+    @endsection
 </head>
 <body>
     <div id="app">

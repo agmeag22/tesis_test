@@ -12,8 +12,10 @@ class HomeController extends Controller
      * @return void
      */
     public function __construct()
-    {
+    {   
+
         $this->middleware('auth');
+        $this->middleware('is_admin', ['only' => ['only_admin_can_see']]);
     }
 
     /**
@@ -21,7 +23,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function only_admin_can_see()
     {
         return view('home');
     }

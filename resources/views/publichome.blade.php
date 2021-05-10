@@ -8,8 +8,6 @@
 		[v-cloak] {
 			display: none;
 		}
-
-
 	</style>
 	<title></title>
 </head>
