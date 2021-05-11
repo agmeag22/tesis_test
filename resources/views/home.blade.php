@@ -10,22 +10,15 @@
 	}
 
 	.content-height{
-		height: 80vh !important;
-	}
-	html, body, .v-application, .v-application--wrap {
-		min-height: -webkit-fill-available;
-	}
-
-	.v-application--wrap{
-		min-height: 80vh !important;
+		height: 88vh !important;
 	}
 </style>
 @endsection
 @section('content')
 <div id="app" v-cloak>
-	<v-app style="height: 80vh !important;"> 
-		<v-main style="height: 80vh !important;">
-			<v-container style="height: 80vh !important;">
+	<v-app style="height: 86vh !important;"> 
+		<v-main style="height: 86vh !important;">
+			<v-container style="height: 86vh !important;">
 				<v-toolbar flat color="transparent" class="mb-4">
 					<v-toolbar-title>USUARIOS</v-toolbar-title>
 					<v-divider class="mx-4" inset vertical ></v-divider>
