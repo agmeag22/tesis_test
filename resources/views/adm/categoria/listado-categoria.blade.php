@@ -83,63 +83,27 @@
 											<v-card-subtitle>Complete la siguiente información, a continuación colocar un titulo a la categoria</v-card-subtitle> 
 										</v-col>
 										<v-col md="8">
-											<v-text-field prepend-icon="mdi-account-box" label="Titulo Informe" :rules="[rules.required,rules.mintext]" hide-details="auto" v-model="categoria.nombre"></v-text-field>
+											<v-text-field prepend-icon="mdi-account-box" label="Titulo Categoria" :rules="[rules.required,rules.mintext]" hide-details="auto" v-model="categoria.nombre"></v-text-field>
 										</v-col>
-										
-										{{-- <v-col md="8">
-											<v-menu
-											ref="menu"
-											v-model="mostrarFecha"
-											:close-on-content-click="false"
-											:return-value.sync="fechaInicio"
-											transition="scale-transition"
-											offset-y
-											min-width="290px"
-											>
-											<template v-slot:activator="{ on, attrs }">
-												<v-row>
-													<v-col md="8">
-														<v-text-field
-														v-model="fechaInicio"
-														label="Fecha Conversación"
-														prepend-icon="mdi-calendar"
-														readonly
-														v-bind="attrs"
-														v-on="on"
-														:rules="nameRules"
-														></v-text-field>
-													</v-col>
-												</v-row>
-											</template>
-											<v-date-picker v-model="fechaInicio" no-title scrollable :range="false">
-												<v-spacer></v-spacer>
-												<v-btn text color="primary" @click="mostrarFecha=false">Cancel</v-btn>
-												<v-btn text color="primary"
-												@click="$refs.menu.save(fechaInicio)">OK
-											</v-btn>
-										</v-date-picker>
-									</v-menu>
-								</v-col> --}}
+                                   </v-row>
+                               </v-form>
+                           </div>  
+                       </v-card-text>
+                       <v-card-actions>
+                           <v-spacer></v-spacer>
+                           <v-btn color="red darken-1" class="white--text" @click="dialogCategoria = false">
+                              CANCELAR
+                          </v-btn>
+                          <v-btn color="green darken-1" class="white--text" @click="guardarCategoria()">
+                              GUARDAR
+                          </v-btn>
+                      </v-card-actions>
+                  </v-card>
+              </v-dialog>
 
-							</v-row>
-						</v-form>
-					</div>  
-				</v-card-text>
-				<v-card-actions>
-					<v-spacer></v-spacer>
-					<v-btn color="red darken-1" class="white--text" @click="dialogCategoria = false">
-						CANCELAR
-					</v-btn>
-					<v-btn color="green darken-1" class="white--text" @click="guardarCategoria()">
-						GUARDAR
-					</v-btn>
-				</v-card-actions>
-			</v-card>
-		</v-dialog>
-
-	</v-container>
-</v-main>
-</v-app>
+          </v-container>
+      </v-main>
+  </v-app>
 </div>
 @endsection
 @section('scripts')
@@ -167,22 +131,22 @@
 		data() {
 			return {
                 fechaInicio:null,
-				mostrarFecha: false,
-				editedItem:{
-					id:-1,
-					item:{},
-				},
-				searchInput: "",
-				items:[],
-				totalItems:0,
-				loading: false,
-				nameRules: [
-				v => !!v || 'El campo es requerido',
-				],
-				rules: {
-					required: value => !!value || 'El campo es requerido.',
-					mintext: value => (value && value.length >= 3) || 'Se necesitan 3 caracteres minimo',
-				},
+                mostrarFecha: false,
+                editedItem:{
+                   id:-1,
+                   item:{},
+               },
+               searchInput: "",
+               items:[],
+               totalItems:0,
+               loading: false,
+               nameRules: [
+               v => !!v || 'El campo es requerido',
+               ],
+               rules: {
+                   required: value => !!value || 'El campo es requerido.',
+                   mintext: value => (value && value.length >= 3) || 'Se necesitan 3 caracteres minimo',
+               },
 
                 // rules: {
                 //     required: v => !!v || 'Required.',
@@ -256,18 +220,20 @@
         	},
 
         	openDeleteDialog(item){
-
+                let local=this;
         		var formData = new FormData();
         		formData.append("idcategoria", item.idcategoria);
         		swal({
         			title: 'Está seguro de esta acción?',
         			text: "Eliminar elemento de la lista",
-        			icon: 'warning',
-        			buttons: true,
-        		})
+        			buttons: {
+                        cancel: true,
+                        confirm: true,
+                    },
+                })
         		.then((willDelete) => {
         			if (willDelete) {
-        				axios.post(`/administration/iudop/secret/delete_categoria`,formData)
+        				axios.post(`/administration/iudop/secret/categoria/delete_categoria`,formData)
         				.then((response) => {
         					local.items.splice(local.items.indexOf(item),1);
         					swal({
@@ -293,16 +259,17 @@
         	cstSwal(message1,message2) {
         		swal({
         			title: message1,
-        			buttons: false,
-        			showCancelButton: false,
-        			showConfirmButton: false,
-        		});
+        			buttons: {
+                        cancel: false,
+                        confirm: true,
+                    },
+                });
         	},
 
         	getData() {
         		var local = this;
         		local.loading = true;
-        		axios.get('/administration/iudop/secret/get_categoria',{})
+        		axios.get('/administration/iudop/secret/categoria/get_categoria',{})
         		.then(function (response) {
         			local.items = response.data;
         			local.loading = false;
@@ -327,7 +294,7 @@
         			formData.append("idcategoria", this.editedItem.id);
         			var local = this;
         			local.cstSwal('Guardando...','');
-        			axios.post('/administration/iudop/secret/save_categoria', formData)
+        			axios.post('/administration/iudop/secret/categoria/save_categoria', formData)
         			.then(function (response) {
         				local.cstSwal('Guardado con exito','Los cambios han sido aplicados');
         				console.log(response.data);

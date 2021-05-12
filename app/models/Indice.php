@@ -3,11 +3,7 @@
 namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\models\Informe;
-use App\models\Pregunta;
-use App\models\Subpregunta;
-use App\models\Categoria;
-use App\models\Subcategoria;
+
 
 /**
  * @property int $idindice
@@ -39,30 +35,31 @@ class Indice extends Model
     /**
      * @var array
      */
-    protected $fillable = ['idinforme', 'idcategoria', 'idsubcategoria', 'idpregunta', 'idsubpregunta', 'eliminado', 'created_at', 'updated_at'];
+    protected $fillable = ['idinforme', 'idpregunta','idsubpregunta','idcategoria','idsubcategoria', 'eliminado', 'created_at', 'updated_at'];
 
-    public function Informe()
+    public function informe()
     {
-        return $this->hasOne(Informe::className(), ['idinforme' => 'idinforme']);
+        return $this->hasOne('App\models\Informe', 'idinforme' ,'idinforme');
     }
 
-    public function Pregunta()
+    public function pregunta()
     {
-        return $this->hasOne(Pregunta::className(), ['idpregunta' => 'idpregunta']);
+        return $this->hasOne('App\models\Pregunta', 'idpregunta' ,'idpregunta');
     }
 
-    public function Subpregunta()
+    public function categoria()
     {
-        return $this->hasOne(Subpregunta::className(), ['idsubpregunta' => 'idsubpregunta']);
+        return $this->hasOne('App\models\Categoria', 'idcategoria' ,'idcategoria');
     }
 
-    public function Categoria()
+    public function subpregunta()
     {
-        return $this->hasOne(Categoria::className(), ['idcategoria' => 'idcategoria']);
+        return $this->hasOne('App\models\Subpregunta', 'idsubpregunta' ,'idsubpregunta');
     }
 
-    public function Subcategoria()
+
+    public function subcategoria()
     {
-        return $this->hasOne(Subcategoria::className(), ['idsubcategoria' => 'idsubcategoria']);
+        return $this->hasOne('App\models\Subcategoria', 'idsubcategoria' ,'idsubcategoria');
     }
 }

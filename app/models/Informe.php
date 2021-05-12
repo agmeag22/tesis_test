@@ -30,4 +30,8 @@ class Informe extends Model
      */
     protected $fillable = ['idinforme', 'url_informe', 'titulo', 'fecha_inicio', 'fecha_fin', 'descripcion', 'eliminado', 'created_at', 'updated_at'];
 
+
+    public function indice(){
+        return $this->belongsTo('App\models\Indice','idinforme','idinforme');
+    }
 }

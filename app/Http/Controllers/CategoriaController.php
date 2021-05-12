@@ -24,6 +24,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::where('eliminado',0)->get();
         return $categoria;
     }
+
     public function saveCategoria(Request $request)
     {
 

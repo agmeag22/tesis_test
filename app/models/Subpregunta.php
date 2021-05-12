@@ -27,17 +27,17 @@ class Subpregunta extends Model
      * 
      * @var string
      */
-    protected $primaryKey = 'idsubpregunta';
+    protected $primaryKey = 'id';
 
     /**
      * @var array
      */
-    protected $fillable = ['num_subpregunta', 'idpregunta', 'eliminado', 'created_at', 'updated_at'];
+    protected $fillable = ['idsubpregunta', 'num_subpregunta','idpregunta','eliminado', 'created_at', 'updated_at'];
 
 
-    public function Pregunta()
+    public function pregunta()
     {
-        return $this->hasOne(Pregunta::className(), ['idpregunta' => 'idpregunta']);
-    }
+       return $this->belongsTo('App\models\Pregunta', 'idcategoria', 'idcategoria');
+   }
 
 }

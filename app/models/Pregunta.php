@@ -18,18 +18,29 @@ class Pregunta extends Model
      * 
      * @var string
      */
-    protected $table = 'categoria';
+    protected $table = 'pregunta';
 
     /**
      * The primary key for the model.
      * 
      * @var string
      */
-    protected $primaryKey = 'idcategoria';
+    protected $primaryKey = 'idpregunta';
 
     /**
      * @var array
      */
-    protected $fillable = ['nombre', 'eliminado', 'created_at', 'updated_at'];
+    protected $fillable = ['idpregunta','num_pregunta','idinforme', 'eliminado', 'created_at', 'updated_at'];
+
+
+    public function subpregunta()
+    {
+        return $this->hasMany('App\models\Subpregunta', 'idpregunta', 'idpregunta');
+    }
+
+    public function informe()
+    {
+        return $this->hasOne('App\models\Informe', 'idinforme', 'idinforme');
+    }
 
 }

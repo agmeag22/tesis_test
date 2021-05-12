@@ -36,9 +36,8 @@ class Subcategoria extends Model
 
     public function categoria()
     {
-        return $this->hasOne('App\models\Categoria', 'idcategoria', 'idcategoria');
+        return $this->belongsTo('App\models\Categoria', 'idcategoria', 'idcategoria');
     }
-
 
 
 

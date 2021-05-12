@@ -228,7 +228,7 @@
             <ul class="menu">
                 <li><a href="#">Gestionar Indices<i class="fa fa-chevron-down"></i></a>
                     <ul>
-                        <li><a href="#">Listado Indices</a></li>
+                        <li><a href="/administration/iudop/secret/indice/indice">Listado Indices</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Gestionar Informes<i class="fa fa-chevron-down"></i></a>

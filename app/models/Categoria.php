@@ -32,8 +32,7 @@ class Categoria extends Model
      */
     protected $fillable = ['nombre', 'eliminado', 'created_at', 'updated_at'];
 
-    public function subcategoria()
-    {
-        return $this->belongsTo('App\models\Subcategoria', 'idcategoria', 'idcategoria');
+    public function subcategoria(){
+        return $this->hasMany('App\models\Subcategoria', 'idcategoria', 'idcategoria');
     }
 }

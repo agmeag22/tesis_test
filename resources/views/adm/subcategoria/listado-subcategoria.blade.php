@@ -232,7 +232,7 @@
         	openDialog(item){
         		if(item!=-1){
                     this.editedItem.item=item;
-        			this.editedItem.id=item.idsubcategoria;
+                    this.editedItem.id=item.idsubcategoria;
                     this.subcategoria.nombre=item.nombre;
                     this.subcategoria.categoria=item.categoria.idcategoria;
                 }else{
@@ -245,7 +245,8 @@
          },
 
          openDeleteDialog(item){
-
+            let local=this;
+            this.editedItem.item=item;
             var formData = new FormData();
             formData.append("idsubcategoria", item.idsubcategoria);
             swal({
@@ -258,7 +259,7 @@
                 if (willDelete) {
                     axios.post(`/administration/iudop/secret/subcategoria/delete_subcategoria`,formData)
                     .then((response) => {
-                        local.items.splice(local.items.indexOf(item),1);
+                        local.items.splice(local.items.indexOf(local.editedItem.item),1);
                         swal({
                             title:'Borrado Exitoso',
                             text:'El elemento ha sido eliminado',
@@ -279,81 +280,82 @@
             });
         },
 
-      cstSwal(message1,message2) {
-        swal({
-            title: message1,
-            buttons: true,
-            showCancelButton: false,
-            showConfirmButton: false,
+        cstSwal(message1,message2) {
+            swal({
+                title: message1,
+                buttons: {
+                    cancel: false,
+                    confirm: true,
+                },
+            });
+        },
+
+        getCategoria() {
+            var local = this;
+            local.loading = true;
+            axios.get('/administration/iudop/secret/categoria/get_categoria',{})
+            .then(function (response) {
+                local.categorias = response.data;
+                local.loading = false;
+            })
+            .catch(function (error) {
+                local.loading = false;
+                window.console.log(error);
+                if (error.response) {
+                    window.console.log(error.response);
+                    if (error.response.status == 401) {
+                        location.reload();
+                    }
+                }
+            })
+        },
+
+        getData() {
+            var local = this;
+            local.loading = true;
+            axios.get('/administration/iudop/secret/subcategoria/get_subcategoria',{})
+            .then(function (response) {
+                local.items = response.data;
+                local.loading = false;
+            })
+            .catch(function (error) {
+                local.loading = false;
+                window.console.log(error);
+                if (error.response) {
+                    window.console.log(error.response);
+                    if (error.response.status == 401) {
+                        location.reload();
+                    }
+                }
+            })
+        },
+
+        guardarSubcategoria() {
+          this.$refs.form.validate();
+          if (this.valid) {
+             var formData = new FormData();
+             formData.append("nombre", this.subcategoria.nombre);
+             formData.append("categoria", this.subcategoria.categoria);
+             formData.append("idsubcategoria", this.editedItem.id);
+             var local = this;
+             local.cstSwal('Guardando...','');
+             axios.post('/administration/iudop/secret/subcategoria/save_subcategoria', formData)
+             .then(function (response) {
+                local.cstSwal('Guardado con exito','Los cambios han sido aplicados');
+                console.log(response.data);
+                local.dialogSubcategoria=false;
+                if(local.editedItem.id==-1){
+                   local.items.push(response.data);
+               }else{
+                   local.items.splice(local.items.indexOf(local.editedItem.item),1,response.data);
+               }
+               swal.close();
+           }).catch(function (error) {
+            local.cstSwal('Error','Intente de nuevo');
+            console.log(error);
         });
-    },
-
-      getCategoria() {
-        var local = this;
-        local.loading = true;
-        axios.get('/administration/iudop/secret/categoria/get_categoria',{})
-        .then(function (response) {
-            local.categorias = response.data;
-            local.loading = false;
-        })
-        .catch(function (error) {
-            local.loading = false;
-            window.console.log(error);
-            if (error.response) {
-                window.console.log(error.response);
-                if (error.response.status == 401) {
-                    location.reload();
-                }
-            }
-        })
-    },
-
-    getData() {
-        var local = this;
-        local.loading = true;
-        axios.get('/administration/iudop/secret/subcategoria/get_subcategoria',{})
-        .then(function (response) {
-            local.items = response.data;
-            local.loading = false;
-        })
-        .catch(function (error) {
-            local.loading = false;
-            window.console.log(error);
-            if (error.response) {
-                window.console.log(error.response);
-                if (error.response.status == 401) {
-                    location.reload();
-                }
-            }
-        })
-    },
-
-  guardarSubcategoria() {
-      this.$refs.form.validate();
-      if (this.valid) {
-         var formData = new FormData();
-         formData.append("nombre", this.subcategoria.nombre);
-         formData.append("categoria", this.subcategoria.categoria);
-         formData.append("idsubcategoria", this.editedItem.id);
-         var local = this;
-         local.cstSwal('Guardando...','');
-         axios.post('/administration/iudop/secret/subcategoria/save_subcategoria', formData)
-         .then(function (response) {
-            local.cstSwal('Guardado con exito','Los cambios han sido aplicados');
-            console.log(response.data);
-            local.dialogSubcategoria=false;
-            if(local.editedItem.id==-1){
-               local.items.push(response.data);
-           }else{
-               local.items.splice(local.items.indexOf(local.editedItem.item),1,response.data);
-           }
-           swal.close();
-       }).catch(function (error) {
-        local.cstSwal('Error','Intente de nuevo');
-        console.log(error);
-    });
-   }
-}, 
+       }
+   }, 
 }
 })
 </script>

@@ -27,6 +27,13 @@ class SubcategoriaController extends Controller
         return $subcategoria;
     }
 
+    public function getCategoriaBySub(Request $request)
+    {
+        $subcategoria = Subcategoria::where('idsubcategoria',$request->idsubcategoria)->first();
+        return $subcategoria->idcategoria;
+    }
+
+
     public function saveSubcategoria(Request $request)
     {
 
@@ -41,6 +48,7 @@ class SubcategoriaController extends Controller
             $subcategoria->idcategoria=$request->categoria;
             $subcategoria->save();
         }
+        $subcategoria=Subcategoria::with(['categoria'])->where('idsubcategoria',$subcategoria->idsubcategoria)->first();
         return $subcategoria;
     }
 
